@@ -25,51 +25,109 @@
             <div id="wrap">
                 <div class="oe_structure"/>
                 <div class="container">
-                    <h1 t-if="messages" class="mt32">
-                        Unread messages
-                    </h1>
-                    <t t-if="pager">
-                        <t t-call="portal.pager">
-                            <t t-set="classname">pull-right mb-3</t>
-                        </t>
-                    </t>
-                    <!-- Create a list of unread messages that have a link to page where the message can be read -->
-                    <div class="mt32">
-                        <table t-if="messages" class="table table-hover">
-                            <thead>
-                                <tr class="active">
-                                    <th>Where</th>
-                                    <th>By whom</th>
-                                    <th>When</th>
-                                </tr>
-                            </thead>
-                            <t t-foreach="messages" t-as="message">
-                                <tr>
-                                    <td>
-                                        <a title="URL where the message is" t-att-href="message.website_url">
-                                            <t t-esc="message.record_name"/>
-                                        </a>
-                                    </td>
-                                    <td><span title="Author of the message" t-field="message.sudo().author_id.name"/></td>
-                                    <td>
-                                        <span t-field="message.create_date" t-field-options='{"format": "dd.MM.yyyy HH:mm"}' />
-                                    </td>
-                                </tr>
+                    <t t-if="messages or current_search">
+                        <h1 class="mt-3">
+                            Unread messages
+                        </h1>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-8">
+                                <!-- Search messages with author-->
+                                <form t-att-action="search_url" method="get" class="form-inline">
+                                    <t t-call="website.website_search_box"/>
+                                </form>
+                                <div class="mt-2" t-if="current_search">
+                                    <h5>Showing results with search:</h5>
+                                    <span class="badge"><t t-esc="current_search"/></span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="pull-right">
+                                    <button id="mark_all_read" type="button"
+                                        class="btn btn-primary" data-toggle="modal"
+                                        data-target="#mark_all_read_confirm"><i class="fa fa-envelope-open"/></button>
+                                </div>
+                            </div>
+                        </div>
+                        <t t-if="messages">
+                            <t t-if="pager" t-call="website_utilities.custom_pager">
+                                <t t-set="classname">pull-right mb-3</t>
                             </t>
-                        </table>
-                    </div>
-                    <t t-if="pager">
-                        <t t-call="portal.pager">
-                            <t t-set="classname">pull-right</t>
+
+                            <!-- Create a list of unread messages that have a link to page where the message can be read -->
+                            <div class="mt-3">
+                                <table class="table table-hover status_table">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>Where</th>
+                                            <th>By whom</th>
+                                            <th>When</th>
+                                        </tr>
+                                    </thead>
+                                    <t t-foreach="messages" t-as="message">
+                                        <tr>
+                                            <td>
+                                                <a title="URL where the message is" t-att-href="message.website_url"><t t-esc="message.record_name"/></a>
+                                            </td>
+                                            <td><span title="Author of the message" t-field="message.sudo().author_id.name"/></td>
+                                            <td>
+                                                <span t-field="message.create_date" t-options='{"format": "dd.MM.yyyy, HH:mm"}' />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+                            <t t-if="pager" t-call="website_utilities.custom_pager">
+                                <t t-set="classname">pull-right</t>
+                            </t>
                         </t>
                     </t>
-                    <t t-if="not messages">
-                        <div class="mt64">
+                    <t t-if="not messages and not current_search">
+                        <div class="mt-5">
                             <h2 class="text-center">You don't have any unread messages!<br/>Well done!</h2>
+                        </div>
+                    </t>
+                    <t t-if="not messages and current_search">
+                        <div class="mt-5">
+                            <h3 class="text-center">
+                                Your current search didn't match any authors.<br/>
+                                You can clear the current search by clicking the search icon.<br/><br/>
+                                Please try again.
+                            </h3>
                         </div>
                     </t>
                 </div>
             </div>
+            <t t-call="website_unread_messages.mark_all_read"/>
+            <script type="text/javascript" src="/website_unread_messages/static/src/js/mark_read.js?v=001"></script>
         </t>
+    </template>
+
+    <template id="mark_all_read" name="Mark all messages read">
+        <div id="mark_all_read_confirm" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="Disqualification modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mark all messages read</h5>
+                        <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
+                            <span aria-label="Close">&amp;times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <p>You are about to <b>mark all messages as read</b>, not only the search results of your current search. You can't undo this afterwards.</p>
+                            <p>Are you sure you want to continue?</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                            data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger read-confirm"
+                            data-dismiss="modal">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </template>
 </odoo>

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-25 08:22+0000\n"
-"PO-Revision-Date: 2019-01-25 10:25+0200\n"
+"POT-Creation-Date: 2019-07-10 09:47+0000\n"
+"PO-Revision-Date: 2019-07-10 12:49+0300\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,25 +18,70 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: website_unread_messages
-#: code:addons/website_unread_messages/controllers/main.py:100
+#: code:addons/website_unread_messages/controllers/main.py:103
 #, python-format
 msgid "%d new messages in discussions!"
 msgstr "%d uutta viestiä keskusteluissa!"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.header
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.header
 msgid "<span class=\"sr-only\">Unread messages</span>"
 msgstr "<span class=\"sr-only\">Lukemattomat viestit</span>"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "Author of the message"
 msgstr "Viestin kirjoittaja"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "By whom"
 msgstr "Keneltä"
+
+#. module: website_unread_messages
+#: model:ir.model,name:website_unread_messages.model_res_partner
+msgid "Contact"
+msgstr "Kontakti"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__create_uid
+msgid "Created by"
+msgstr "Luonut"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__create_date
+msgid "Created on"
+msgstr "Luotu"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__display_name
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,help:website_unread_messages.field_unread_message__res_model
+msgid "For what model the format is valid"
+msgstr "Mille mallille formaatti on"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__id
+msgid "ID"
+msgstr ""
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message____last_update
+msgid "Last Modified on"
+msgstr "Viimeksi muokattu"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__write_uid
+msgid "Last Updated by"
+msgstr "Viimeksi päivittänyt"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__write_date
+msgid "Last Updated on"
+msgstr "Viimeksi päivitetty"
 
 #. module: website_unread_messages
 #: model:ir.model,name:website_unread_messages.model_mail_message
@@ -44,14 +89,14 @@ msgid "Message"
 msgstr "Viesti"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.header
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.header
 msgid "Messages"
 msgstr "Viestit"
 
 #. module: website_unread_messages
-#: model:ir.model,name:website_unread_messages.model_res_partner
-msgid "Partner"
-msgstr "Kumppani"
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__res_model
+msgid "Resources model"
+msgstr "Resurssien malli"
 
 #. module: website_unread_messages
 #: code:addons/website_unread_messages/controllers/main.py:68
@@ -60,24 +105,46 @@ msgid "There aren't any new messages!"
 msgstr "Ei uusia viestejä!"
 
 #. module: website_unread_messages
-#: code:addons/website_unread_messages/models/unread_message.py:42
-#: sql_constraint:unread.message:0
+#: model:ir.model.fields,help:website_unread_messages.field_unread_message__url_format
+msgid "This field defines the URL format for model"
+msgstr "Kenttä määrittää mallin URL:n formaatin"
+
+#. module: website_unread_messages
+#: code:addons/website_unread_messages/models/unread_message.py:43
 #, python-format
 msgid "This model already has a format."
 msgstr "Tällä mallilla on jo formaatti määritetty."
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: sql_constraint:unread.message:0
+msgid "Tällä mallilla on jo formaatti määritetty."
+msgstr ""
+
+#. module: website_unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__url_format
+msgid "URL format of the model"
+msgstr "Mallin URL formaatti"
+
+#. module: website_unread_messages
+#: model:ir.model.fields,help:website_unread_messages.field_account_invoice_send__website_url
+#: model:ir.model.fields,help:website_unread_messages.field_mail_compose_message__website_url
+#: model:ir.model.fields,help:website_unread_messages.field_mail_mail__website_url
+#: model:ir.model.fields,help:website_unread_messages.field_mail_message__website_url
+msgid "URL on website"
+msgstr "URL verkkosivustolla"
+
+#. module: website_unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "URL where the message is"
-msgstr "URL-osoite, missä viesti sijaitsee verkkosivustolla"
+msgstr "Viestin URL"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_message_tree_view
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_message_tree_view
 msgid "Unread message format"
-msgstr "Lukemattomien viestien formaatti"
+msgstr "Lukemattoman viestin formaatti"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "Unread messages"
 msgstr "Lukemattomat viestit"
 
@@ -88,38 +155,51 @@ msgid "Unread messages formats"
 msgstr "Lukemattomien viestien formaatit"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: model:ir.model.fields,field_description:website_unread_messages.field_account_invoice_send__website_url
+#: model:ir.model.fields,field_description:website_unread_messages.field_mail_compose_message__website_url
+#: model:ir.model.fields,field_description:website_unread_messages.field_mail_mail__website_url
+#: model:ir.model.fields,field_description:website_unread_messages.field_mail_message__website_url
+msgid "Website URL"
+msgstr "Verkkosivuston osoite"
+
+#. module: website_unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "When"
 msgstr "Milloin"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "Where"
 msgstr "Missä"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "You don't have any unread messages!<br/>Well done!"
-msgstr "Sinulla ei ole yhtään lukematonta viestiä!<br/>Hienoa!"
+msgstr "Sinulla ei ole lukemattomia viestejä!<br/>Hienoa!"
 
 #. module: website_unread_messages
-#: code:addons/website_unread_messages/controllers/main.py:97
+#: code:addons/website_unread_messages/controllers/main.py:100
 #, python-format
 msgid "You have "
 msgstr "Sinulla on "
 
 #. module: website_unread_messages
-#: code:addons/website_unread_messages/controllers/main.py:102
+#: code:addons/website_unread_messages/controllers/main.py:105
 #, python-format
 msgid "a new message in discussions!"
 msgstr "lukematon viesti keskusteluissa!"
 
 #. module: website_unread_messages
-#: model:ir.ui.view,arch_db:website_unread_messages.unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "pull-right"
-msgstr "pull-right"
+msgstr ""
+
+#. module: website_unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
+msgid "pull-right mb-3"
+msgstr ""
 
 #. module: website_unread_messages
 #: model:ir.model,name:website_unread_messages.model_unread_message
 msgid "unread.message"
-msgstr "unread.message"
+msgstr ""

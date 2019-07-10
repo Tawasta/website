@@ -62,7 +62,7 @@ class WebsiteUnreadMessagesController(http.Controller):
             0 if no messages and message WILL BE displayed
             > 0 if new messages
         """
-        current_user = http.request.env.user
+        current_user = request.env.user
         partner = current_user.partner_id
         timestamp = request.session.get('messages_checked')
         no_messages = _("There aren't any new messages!")
@@ -121,7 +121,7 @@ class WebsiteUnreadMessagesController(http.Controller):
         auth='user',
         website=True,
     )
-    def unread_messages(self, page=1, **post):
+    def unread_messages(self, search='', page=1, **post):
         """ Route to show list of unread messages """
         current_user = request.env.user
         partner_id = current_user.partner_id.id
@@ -137,6 +137,9 @@ class WebsiteUnreadMessagesController(http.Controller):
         domain = [
             ('needaction_partner_ids', '=', partner_id),
             ('website_url', '!=', False),
+            '|',
+            ('author_id', 'ilike', search),
+            ('record_name', 'ilike', search),
         ]
         messages_count = message_model.search_count(domain)
         url = '/unread_messages'
@@ -156,11 +159,11 @@ class WebsiteUnreadMessagesController(http.Controller):
             limit=pager_limit,
             offset=pager['offset']
         )
+        search_url = ('/unread_messages?%s' % (search))
         values = {
             'messages': messages,
             'pager': pager,
+            'search_url': search_url,
+            'current_search': search,
         }
-        return request.render(
-            'website_unread_messages.unread_messages',
-            values
-        )
+        return request.render('website_unread_messages.unread_messages', values)
