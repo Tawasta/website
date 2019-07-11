@@ -5,7 +5,7 @@ odoo.define("website_unread_messages.unread_messages", function (require) {
     var toastr = require("website_utilities.notifications").toastr;
 
     // Upon page reload, check for new messages
-    function checkNewMessages() {
+    function checkNewMessages () {
         var action = "/new_messages/";
 
         ajax.jsonRpc(action, "call").then(function (res) {

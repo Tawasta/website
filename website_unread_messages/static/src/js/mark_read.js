@@ -9,7 +9,7 @@ odoo.define("website_unread_messages.mark_read", function (require) {
             rpc.query({
                 model: "mail.message",
                 method: "mark_all_as_read",
-            }).then(function() {
+            }).then(function () {
                 location.reload();
             });
         });
