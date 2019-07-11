@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-11 07:35+0000\n"
-"PO-Revision-Date: 2019-07-11 10:37+0300\n"
+"POT-Creation-Date: 2019-07-11 10:44+0000\n"
+"PO-Revision-Date: 2019-07-11 13:45+0300\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_unread_messages.header
 msgid "<span class=\"sr-only\">Unread messages</span>"
 msgstr "<span class=\"sr-only\">Lukemattomat viestit</span>"
+
+#. module: website_unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
+msgid "<span>Showing results with search: </span>"
+msgstr "<span>Näytetään tulokset haulla: </span>"
 
 #. module: website_unread_messages
 #: model_terms:ir.ui.view,arch_db:website_unread_messages.mark_all_read
@@ -127,6 +132,11 @@ msgstr "Viestit"
 
 #. module: website_unread_messages
 #: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
+msgid "Move to message"
+msgstr "Siirry viestiin"
+
+#. module: website_unread_messages
+#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
 msgid "Please try again."
 msgstr "Ole hyvä ja yritä uudelleen."
 
@@ -134,11 +144,6 @@ msgstr "Ole hyvä ja yritä uudelleen."
 #: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__res_model
 msgid "Resources model"
 msgstr "Resurssien malli"
-
-#. module: website_unread_messages
-#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
-msgid "Showing results with search:"
-msgstr "Näytetään tulokset haulla:"
 
 #. module: website_unread_messages
 #: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
@@ -158,10 +163,14 @@ msgstr "Kenttä määrittää mallin URL:n formaatin"
 
 #. module: website_unread_messages
 #: code:addons/website_unread_messages/models/unread_message.py:43
-#: sql_constraint:unread.message:0
 #, python-format
 msgid "This model already has a format."
 msgstr "Tällä mallilla on jo formaatti määritetty."
+
+#. module: website_unread_messages
+#: sql_constraint:unread.message:0
+msgid "Tällä mallilla on jo formaatti määritetty."
+msgstr ""
 
 #. module: website_unread_messages
 #: model:ir.model.fields,field_description:website_unread_messages.field_unread_message__url_format
@@ -175,11 +184,6 @@ msgstr "Mallin URL formaatti"
 #: model:ir.model.fields,help:website_unread_messages.field_mail_message__website_url
 msgid "URL on website"
 msgstr "URL verkkosivustolla"
-
-#. module: website_unread_messages
-#: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_messages
-msgid "URL where the message is"
-msgstr "Viestin URL"
 
 #. module: website_unread_messages
 #: model_terms:ir.ui.view,arch_db:website_unread_messages.unread_message_tree_view
