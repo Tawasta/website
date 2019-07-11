@@ -1,4 +1,4 @@
-odoo.define('website_utilities.notifications', function (require) {
+odoo.define("website_utilities.notifications", function (require) {
     "use strict";
 
     $(function () {
