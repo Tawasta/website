@@ -3,6 +3,7 @@
     <template id="assets_frontend" name="Website Utilities assets" inherit_id="website.assets_frontend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/website_unread_messages/static/src/js/unread_messages.js"></script>
+            <script type="text/javascript" src="/website_unread_messages/static/src/js/mark_read.js"></script>
         </xpath>
     </template>
 </odoo>

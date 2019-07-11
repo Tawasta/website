@@ -103,7 +103,6 @@
                 </div>
             </div>
             <t t-call="website_unread_messages.mark_all_read"/>
-            <script type="text/javascript" src="/website_unread_messages/static/src/js/mark_read.js?v=001"></script>
         </t>
     </template>
 
