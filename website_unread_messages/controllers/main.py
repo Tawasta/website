@@ -140,11 +140,14 @@ class WebsiteUnreadMessagesController(http.Controller):
             '|',
             ('author_id', 'ilike', search),
             ('record_name', 'ilike', search),
+            '&',
+            ('notification_ids.res_partner_id', '=', current_user.partner_id.id),
+            ('notification_ids.is_read', '=', False),
         ]
         messages_count = message_model.search_count(domain)
         url = '/unread_messages'
         total_count = messages_count
-        pager_limit = 10
+        pager_limit = 50
         pager = request.website.pager(
             url=url,
             total=total_count,
