@@ -83,15 +83,15 @@ class WebsiteUnreadMessagesController(http.Controller):
                 too_soon = True if difference < 60 else False
 
                 if too_soon and message_count != 0:
-                    # Do not display message if message was displayed in the last
-                    # 60 seconds
+                    # Do not display message if message was displayed
+                    # in the last 60 seconds
                     return False
                 elif message_count == 0:
-                    # State changed to 'all messages are read' -> Display message
+                    # State changed to 'all messages are read'
                     request.session['messages_checked'] = None
             else:
                 if message_count == 0:
-                    # No timestamp == no messages last time function was called
+                    # No timestamp == no messages, so state didn't change
                     return False
 
             if message_count != 0:
@@ -123,8 +123,7 @@ class WebsiteUnreadMessagesController(http.Controller):
     )
     def unread_messages(self, search='', page=1, **post):
         """ Route to show list of unread messages """
-        current_user = request.env.user
-        partner_id = current_user.partner_id.id
+        partner_id = request.env.user.partner_id.id
         message_model = request.env['mail.message']
         page_enabled = request.env['ir.config_parameter'].sudo().get_param(
             'website_unread_messages.icp_unread_messages_page')
@@ -141,7 +140,7 @@ class WebsiteUnreadMessagesController(http.Controller):
             ('author_id', 'ilike', search),
             ('record_name', 'ilike', search),
             '&',
-            ('notification_ids.res_partner_id', '=', current_user.partner_id.id),
+            ('notification_ids.res_partner_id', '=', partner_id),
             ('notification_ids.is_read', '=', False),
         ]
         messages_count = message_model.search_count(domain)
@@ -169,4 +168,7 @@ class WebsiteUnreadMessagesController(http.Controller):
             'search_url': search_url,
             'current_search': search,
         }
-        return request.render('website_unread_messages.unread_messages', values)
+        return request.render(
+            'website_unread_messages.unread_messages',
+            values
+        )
