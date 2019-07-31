@@ -36,7 +36,7 @@ class UnreadMessage(models.Model):
 
     # 1. Private attributes
     _name = 'unread.message'
-
+    _description = 'Website unread messages'
     _sql_constraints = [
         ('res_model', 'unique(res_model)',
          _('This model already has a format.'))

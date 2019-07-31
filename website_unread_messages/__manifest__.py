@@ -21,7 +21,7 @@
 {
     'name': 'Website Unread Messages',
     'summary': 'Unread messages for website',
-    'version': '12.0.1.1.6',
+    'version': '12.0.1.1.7',
     'category': 'Website',
     'website': 'https://github.com/Tawasta/website',
     'author': 'Oy Tawasta Technologies Ltd.',
@@ -33,10 +33,10 @@
         'website_utilities',
     ],
     'data': [
+        'data/website_unread_messages_data.xml',
+        'security/ir.model.access.csv',
         'views/website_unread_messages_static.xml',
         'views/website_unread_message.xml',
         'views/unread_message.xml',
-        'data/website_unread_messages_data.xml',
-        'security/ir.model.access.csv',
     ],
 }
