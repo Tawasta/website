@@ -9,11 +9,11 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <t t-foreach="languages" t-as="lg">
-                        <li t-att-class="'active' if request.httprequest.cookies.get('frontend_lang') == lg[0] else ''">
+                        <li>
                             <a t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang=lg[0])"
                                t-att-data-default-lang="(editable or translatable) and 'true' if website and lg[0] == website.default_lang_code else None"
                                t-att-data-lang="lg[0]"
-                               class="dropdown-item js_change_lang">
+                               t-attf-class="dropdown-item js_change_lang {{'active' if request.httprequest.cookies.get('frontend_lang') == lg[0] else ''}}">
                                 <t t-esc="lg[1].split('/').pop()"/>
                             </a>
                         </li>
