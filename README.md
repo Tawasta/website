@@ -16,7 +16,7 @@ addon | version | summary
 [website_kanban_board](website_kanban_board/) | 12.0.1.0.0 | Website Kanban Board
 [website_unread_messages](website_unread_messages/) | 12.0.1.0.0 | Unread messages for website
 [website_utilities](website_utilities/) | 12.0.1.0.0 | Useful website utilities
-
+[website_header_language_selector](website_header_language_selector/) | 12.0.1.0.0 | Language selector for website header
 
 Unported addons
 ---------------
@@ -24,7 +24,6 @@ addon | version | summary
 --- | --- | ---
 [website_footer_company_info](website_footer_company_info/) | 12.0.1.0.0 (unported) | Add company information to footer
 [website_forum_employees_only](website_forum_employees_only/) | 12.0.1.0.0 (unported) | Restricts access to forum to employees
-[website_header_language_selector](website_header_language_selector/) | 12.0.1.0.0 (unported) | Language selector for website header
 [website_home_screen](website_home_screen/) | 12.0.1.0.0 (unported) | Website home screen
 [website_menu_disable](website_menu_disable/) | 12.0.1.0.0 (unported) | Allow disabling menu items
 [website_partner_details](website_partner_details/) | 12.0.1.0.0 (unported) | Partner details in partner page
