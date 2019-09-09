@@ -2,10 +2,10 @@
 <odoo>
     <!-- Header customizations -->
     <template id="header" inherit_id="website.layout">
-        <xpath expr="//ul[@id='top_menu']/li[@class='divider']" position="before">
-            <li class="dropdown" t-ignore="true">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span>Language</span> <span class="caret" t-ignore="true"></span>
+        <xpath expr="//header//ul[@id='top_menu']/li" position="before">
+            <li class="nav-item dropdown" t-ignore="true">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <span><i class="fa fa-language"/> <i class="fa fa-caret-down" t-ignore="true" /></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <t t-foreach="languages" t-as="lg">

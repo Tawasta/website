@@ -5,7 +5,7 @@
      -->
     <template id="language_selector" inherit_id="website.language_selector">
         <xpath expr="//ul" position="attributes">
-            <attribute name="class">hidden</attribute>
+            <attribute name="class">d-none</attribute>
         </xpath>
     </template>
 </odoo>
