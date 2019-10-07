@@ -133,6 +133,7 @@ class WebsiteUnreadMessagesController(http.Controller):
 
         # Recordset of unread messages
         domain = [
+            ('website_published', '=', True),
             ('needaction_partner_ids', '=', partner_id),
             ('website_url', '!=', False),
             '|',

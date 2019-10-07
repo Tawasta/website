@@ -68,6 +68,7 @@ class ResPartner(models.Model):
                 M ON (M.id = R.mail_message_id)
                 WHERE R.res_partner_id = %s
                 AND M.model IN (%s)
+                AND M.website_published = true
                 AND (R.is_read = false OR R.is_read IS NULL)""",
                                 (self.env.user.partner_id.id,
                                  ",".join(map(str, model_list))))
