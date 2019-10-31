@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Add link to navigation bar -->
+    <template id="header" inherit_id="website_unread_messages.header">
+        <xpath expr="//a[@href='/unread_messages']/.." position="after">
+            <t t-set="partner" t-value="request.env.user.partner_id"/>
+            <t t-if="request.env.ref('base.public_partner').id != partner.id">
+                <t t-set="is_enabled" t-value="request.env['ir.config_parameter'].sudo().get_param('website_read_messages.icp_read_messages_page')"/>
+                <li t-att-class="'nav-item' if is_enabled == '1' else 'd-none'">
+                    <a class="nav-link" href="/read_messages">
+                        <span>Read</span>
+                        <span class="sr-only">Read messages</span>
+                    </a>
+                </li>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Page for showing the read messages and links to the pages -->
+    <template id="read_messages" name="Read messages">
+        <t t-call="website.layout">
+            <t t-set="title">Read messages</t>
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <div class="container">
+                    <t t-if="messages or current_search">
+                        <h1 class="mt-5">
+                            Read messages
+                        </h1>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-12">
+                                <!-- Search messages with author-->
+                                <form t-att-action="search_url" method="get" class="form-inline">
+                                    <t t-call="website.website_search_box"/>
+                                </form>
+                                <div class="mt-3 h5" t-if="current_search">
+                                    <span>Showing results with search: </span>
+                                    <a t-att-href="request.httprequest.path" class="badge badge-secondary">
+                                        <t t-esc="current_search"/>
+                                        <span aria-label="Close">&amp;times;</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <t t-if="messages">
+                            <div class="row">
+                                <div class="col-6">
+                                    <span t-esc="visible_messages"/>
+                                </div>
+                                <div class="col-6">
+                                    <t t-if="pager" t-call="website_utilities.custom_pager">
+                                        <t t-set="classname">pull-right mb-3</t>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- Create a list of unread messages that have a link to page where the message can be read -->
+                                    <table class="table table-hover status_table">
+                                        <thead>
+                                            <tr class="active">
+                                                <th>Subject</th>
+                                                <th>By whom</th>
+                                                <th>When</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-foreach="messages" t-as="message">
+                                            <tr>
+                                                <td>
+                                                    <a title="Move to message" t-att-href="message.website_url"><t t-esc="message.record_name"/></a>
+                                                </td>
+                                                <td><span title="Author of the message" t-field="message.sudo().author_id.name"/></td>
+                                                <td>
+                                                    <span t-field="message.create_date" t-options='{"format": "dd.MM.yyyy, HH:mm"}' />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </div>
+                            <t t-if="pager" t-call="website_utilities.custom_pager">
+                                <t t-set="classname">pull-right</t>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-if="not messages and not current_search">
+                        <div class="mt-5">
+                            <h2 class="text-center">You don't have any read messages!<br/>Well done!</h2>
+                        </div>
+                    </t>
+                    <t t-if="not messages and current_search">
+                        <div class="mt-5 h4 text-center">
+                            <p>
+                                Your current search didn't match any authors or subjects.
+                            </p>
+                            <p>
+                                Please try again.
+                            </p>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
