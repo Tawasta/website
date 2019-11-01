@@ -35,8 +35,9 @@
     'data': [
         'data/website_unread_messages_data.xml',
         'security/ir.model.access.csv',
+        'views/unread_message.xml',
+        'views/res_config_settings_views.xml',
         'views/website_unread_messages_static.xml',
         'views/website_unread_message.xml',
-        'views/unread_message.xml',
     ],
 }

@@ -40,7 +40,7 @@ from odoo.http import request
 class WebsiteUnreadMessagesController(http.Controller):
 
     @http.route(
-        ['/new_messages/'],
+        ['/new_messages'],
         type='json',
         auth='user',
         website=True,
@@ -67,10 +67,10 @@ class WebsiteUnreadMessagesController(http.Controller):
         no_messages = _("There aren't any new messages!")
         msg = ""
         is_enabled = request.env['ir.config_parameter'].sudo().get_param(
-            'website_unread_messages.icp_unread_messages_notification')
+            'website_unread_messages.notifications')
         if is_enabled:
             page_enabled = request.env['ir.config_parameter'].sudo().get_param(
-                'website_unread_messages.icp_unread_messages_page')
+                'website_unread_messages.page')
             # Count unread portal messages
             message_count = partner.sudo(current_user)\
                 .get_portal_needaction_count()
@@ -115,7 +115,7 @@ class WebsiteUnreadMessagesController(http.Controller):
         return json.dumps(values)
 
     @http.route(
-        ['/unread_messages/', '/unread_messages/page/<int:page>'],
+        ['/unread_messages', '/unread_messages/page/<int:page>'],
         type='http',
         auth='user',
         website=True,
@@ -125,9 +125,9 @@ class WebsiteUnreadMessagesController(http.Controller):
         partner_id = request.env.user.partner_id.id
         message_model = request.env['mail.message']
         page_enabled = request.env['ir.config_parameter'].sudo().get_param(
-            'website_unread_messages.icp_unread_messages_page')
+            'website_unread_messages.page')
 
-        if page_enabled != '1' or not partner_id:
+        if not page_enabled or not partner_id:
             # Hide page if it's not enabled
             return request.render('website.404')
 
