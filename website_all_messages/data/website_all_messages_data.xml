@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
 
-        <!-- Possibility to turn of read messages page -->
-        <record id="icp_all_messages_page" model="ir.config_parameter">
-            <field name="key">website_all_messages.icp_all_messages_page</field>
-            <field name="value">1</field>
+        <!-- Possibility to turn of all messages page -->
+        <record id="website_all_messages_page" model="ir.config_parameter" forcecreate="False">
+            <field name="key">website_all_messages.page</field>
+            <field name="value" eval="True"/>
         </record>
     </data>
 </odoo>

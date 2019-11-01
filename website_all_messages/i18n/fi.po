@@ -1,0 +1,107 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_all_messages
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-01 17:32+0000\n"
+"PO-Revision-Date: 2019-11-01 19:34+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fi\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "<span aria-label=\"Close\">&amp;times;</span>"
+msgstr "<span aria-label=\"Sulje\">&amp;times;</span>"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.header
+msgid ""
+"<span>All</span>\n"
+"                        <span class=\"sr-only\">All messages</span>"
+msgstr ""
+"<span>Kaikki</span>\n"
+"                        <span class=\"sr-only\">Kaikki viestit</span>"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "<span>Showing results with search: </span>"
+msgstr "<span>Näytetään tulokset haulla: </span>"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "All messages"
+msgstr "Kaikki viestit"
+
+#. module: website_all_messages
+#: model:ir.model.fields,field_description:website_all_messages.field_res_config_settings__all_messages_page
+msgid "All messages' page"
+msgstr "Kaikkien viestien sivu"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "Author of the message"
+msgstr "Viestin kirjoittaja"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "By whom"
+msgstr "Keneltä"
+
+#. module: website_all_messages
+#: model:ir.model,name:website_all_messages.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfiguraatio-asetukset"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.res_config_settings_view_form
+msgid "Enable all messages' page"
+msgstr "Kaikkien viestien sivu"
+
+#. module: website_all_messages
+#: model:ir.model.fields,help:website_all_messages.field_res_config_settings__all_messages_page
+msgid "Enable all messages' page on website"
+msgstr "Ota käyttöön kaikkien viestien sivu verkkosivulla"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "Move to message"
+msgstr "Siirry viestiin"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "Please try again."
+msgstr "Ole hyvä ja yritä uudelleen."
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "Subject"
+msgstr "Aihe"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "When"
+msgstr "Milloin"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "You don't have any messages!"
+msgstr "Sinulla ei ole viestejä!"
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "Your current search didn't match any authors or subjects."
+msgstr "Nykyinen hakusi ei vastannut kirjoittajia tai aiheita."
+
+#. module: website_all_messages
+#: model_terms:ir.ui.view,arch_db:website_all_messages.all_messages
+msgid "pull-right"
+msgstr ""

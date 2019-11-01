@@ -102,7 +102,7 @@ class WebsiteUnreadMessagesController(http.Controller):
                     msg += _("%d new messages in discussions!") % message_count
                 else:
                     msg += _("a new message in discussions!")
-                if page_enabled == '1':
+                if page_enabled:
                     # If unread messages page is enabled (system parameters)
                     msg = "<a href='%s'>%s</a>" % ('/unread_messages', msg)
 

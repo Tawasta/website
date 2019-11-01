@@ -37,7 +37,7 @@ from odoo.http import request
 class WebsiteAllMessagesController(http.Controller):
 
     @http.route(
-        ['/all_messages/', '/all_messages/page/<int:page>'],
+        ['/all_messages', '/all_messages/page/<int:page>'],
         type='http',
         auth='user',
         website=True,
@@ -54,9 +54,9 @@ class WebsiteAllMessagesController(http.Controller):
         partner_id = request.env.user.partner_id.id
         message_model = request.env['mail.message']
         page_enabled = request.env['ir.config_parameter'].sudo().get_param(
-            'website_all_messages.icp_all_messages_page')
+            'website_all_messages.page')
 
-        if page_enabled != '1' or not partner_id:
+        if not page_enabled or not partner_id:
             # Hide page if it's not enabled
             return request.render('website.404')
 

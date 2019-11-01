@@ -21,7 +21,7 @@
 {
     'name': 'Website All Messages',
     'summary': 'All messages for website',
-    'version': '12.0.0.0.1',
+    'version': '12.0.1.0.0',
     'category': 'Website',
     'website': 'https://github.com/Tawasta/website',
     'author': 'Oy Tawasta Technologies Ltd.',
@@ -33,6 +33,7 @@
     ],
     'data': [
         'data/website_all_messages_data.xml',
+        'views/res_config_settings_views.xml',
         'views/website_all_messages.xml',
     ],
 }
