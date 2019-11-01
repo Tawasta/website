@@ -6,27 +6,27 @@
         <xpath expr="//a[@href='/unread_messages']/.." position="after">
             <t t-set="partner" t-value="request.env.user.partner_id"/>
             <t t-if="request.env.ref('base.public_partner').id != partner.id">
-                <t t-set="is_enabled" t-value="request.env['ir.config_parameter'].sudo().get_param('website_read_messages.icp_read_messages_page')"/>
-                <li t-att-class="'nav-item' if is_enabled == '1' else 'd-none'">
-                    <a class="nav-link" href="/read_messages">
-                        <span>Read</span>
-                        <span class="sr-only">Read messages</span>
+                <t t-set="is_enabled" t-value="request.env['ir.config_parameter'].sudo().get_param('website_all_messages.icp_all_messages_page')"/>
+                <li t-att-class="'' if is_enabled == '1' else 'd-none'">
+                    <a class="dropdown-item" href="/all_messages">
+                        <span>All</span>
+                        <span class="sr-only">All messages</span>
                     </a>
                 </li>
             </t>
         </xpath>
     </template>
 
-    <!-- Page for showing the read messages and links to the pages -->
-    <template id="read_messages" name="Read messages">
+    <!-- Page for showing all messages and links to the pages -->
+    <template id="all_messages" name="All messages">
         <t t-call="website.layout">
-            <t t-set="title">Read messages</t>
+            <t t-set="title">All messages</t>
             <div id="wrap">
                 <div class="oe_structure"/>
                 <div class="container">
                     <t t-if="messages or current_search">
                         <h1 class="mt-5">
-                            Read messages
+                            All messages
                         </h1>
                         <div class="row mt-4 mb-4">
                             <div class="col-12">
@@ -44,19 +44,19 @@
                             </div>
                         </div>
                         <t t-if="messages">
-                            <div class="row">
-                                <div class="col-6">
+                            <div class="row align-items-end">
+                                <div class="col-6 mb-3">
                                     <span t-esc="visible_messages"/>
                                 </div>
                                 <div class="col-6">
                                     <t t-if="pager" t-call="website_utilities.custom_pager">
-                                        <t t-set="classname">pull-right mb-3</t>
+                                        <t t-set="classname">pull-right</t>
                                     </t>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- Create a list of unread messages that have a link to page where the message can be read -->
+                                    <!-- Create a list of messages that have a link to page where the message can be read -->
                                     <table class="table table-hover status_table">
                                         <thead>
                                             <tr class="active">
@@ -86,7 +86,7 @@
                     </t>
                     <t t-if="not messages and not current_search">
                         <div class="mt-5">
-                            <h2 class="text-center">You don't have any read messages!<br/>Well done!</h2>
+                            <h2 class="text-center">You don't have any messages!</h2>
                         </div>
                     </t>
                     <t t-if="not messages and current_search">

@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=======================
-Website Read Messages
-=======================
+====================
+Website All Messages
+====================
 
-Adds read messages feature to website.
+Adds all messages -feature to website.
 Notifications are enabled by default, but can be disabled
 through system parameters (1 = enabled, 0 = disabled).
 

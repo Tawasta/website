@@ -3,8 +3,8 @@
     <data noupdate="0">
 
         <!-- Possibility to turn of read messages page -->
-        <record id="icp_read_messages_page" model="ir.config_parameter">
-            <field name="key">website_read_messages.icp_read_messages_page</field>
+        <record id="icp_all_messages_page" model="ir.config_parameter">
+            <field name="key">website_all_messages.icp_all_messages_page</field>
             <field name="value">1</field>
         </record>
     </data>

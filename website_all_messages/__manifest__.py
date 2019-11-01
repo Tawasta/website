@@ -19,8 +19,8 @@
 ##############################################################################
 
 {
-    'name': 'Website Read Messages',
-    'summary': 'Read messages for website',
+    'name': 'Website All Messages',
+    'summary': 'All messages for website',
     'version': '12.0.0.0.1',
     'category': 'Website',
     'website': 'https://github.com/Tawasta/website',
@@ -32,7 +32,7 @@
         'website_unread_messages',
     ],
     'data': [
-        'data/website_read_messages_data.xml',
-        'views/website_read_messages.xml',
+        'data/website_all_messages_data.xml',
+        'views/website_all_messages.xml',
     ],
 }

@@ -24,7 +24,7 @@
 # 2. Known third party imports:
 
 # 3. Odoo imports (openerp):
-from odoo import http, _
+from odoo import http
 from odoo.http import request
 
 # 4. Imports from Odoo modules (rarely, and only if necessary):
@@ -34,17 +34,17 @@ from odoo.http import request
 # 6. Unknown third party imports (One per line sorted and splitted in
 
 
-class WebsiteReadMessagesController(http.Controller):
+class WebsiteAllMessagesController(http.Controller):
 
     @http.route(
-        ['/read_messages/', '/read_messages/page/<int:page>'],
+        ['/all_messages/', '/all_messages/page/<int:page>'],
         type='http',
         auth='user',
         website=True,
     )
-    def read_messages(self, search='', page=1, **post):
+    def all_messages(self, search='', page=1, **post):
         """
-        Route to show list of read messages.
+        Route to show list of all portal messages.
 
         :param search: Search query
         :param page: pager current page
@@ -54,7 +54,7 @@ class WebsiteReadMessagesController(http.Controller):
         partner_id = request.env.user.partner_id.id
         message_model = request.env['mail.message']
         page_enabled = request.env['ir.config_parameter'].sudo().get_param(
-            'website_read_messages.icp_read_messages_page')
+            'website_all_messages.icp_all_messages_page')
 
         if page_enabled != '1' or not partner_id:
             # Hide page if it's not enabled
@@ -68,9 +68,6 @@ class WebsiteReadMessagesController(http.Controller):
             '|',
             ('author_id', 'ilike', search),
             ('record_name', 'ilike', search),
-            '&',
-            ('notification_ids.res_partner_id', '=', partner_id),
-            ('notification_ids.is_read', '=', True),
         ]
 
         messages_count = message_model.search_count(domain)
@@ -93,9 +90,9 @@ class WebsiteReadMessagesController(http.Controller):
         )
         search_url = request.httprequest.path + ("?%s" % search)
 
-        message_start = 50 - page * pager_limit + 1
-        message_end = total_count if total_count < pager_limit else page * pager_limit
-        visible = _("Showing: {} - {} / {}").format(message_start, message_end, total_count)
+        message_start = abs(50 - page * pager_limit) + 1
+        message_end = total_count if total_count < page * pager_limit else page * pager_limit
+        visible = "{} - {} / {}".format(message_start, message_end, total_count)
 
         values = {
             'messages': messages,
@@ -105,6 +102,6 @@ class WebsiteReadMessagesController(http.Controller):
             'current_search': search,
         }
         return request.render(
-            'website_read_messages.read_messages',
+            'website_all_messages.all_messages',
             values
         )
