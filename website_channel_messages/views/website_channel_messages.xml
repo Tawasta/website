@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Add link to navigation bar -->
+    <template id="header" inherit_id="website_messages_base.header">
+        <xpath expr="//li[@id='website_messages_dropdown']/ul" position="inside">
+            <li>
+                <a class="dropdown-item" href="/website_channels">
+                    <span>Channels</span>
+                    <span class="sr-only">Website channels</span>
+                </a>
+            </li>
+         </xpath>
+    </template>
+
+    <template id="my_channels" name="My channels">
+        <t t-call="website.layout">
+            <t t-set="title">My channels</t>
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <div class="container">
+                    <t t-if="channels or current_search">
+                        <h1 class="mt-5">
+                            My channels
+                        </h1>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-12">
+                                <!-- Search messages with author-->
+                                <form t-att-action="search_url" method="get" class="form-inline">
+                                    <t t-call="website.website_search_box"/>
+                                </form>
+                                <div class="mt-3 h5" t-if="current_search">
+                                    <span>Showing results with search: </span>
+                                    <a t-att-href="request.httprequest.path" class="badge badge-secondary">
+                                        <t t-esc="current_search"/>
+                                        <span aria-label="Close">&amp;times;</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <t t-if="channels">
+                            <div class="row align-items-end">
+                                <div class="col-6 mb-3">
+                                    <span t-esc="visible_messages"/>
+                                </div>
+                                <div class="col-6">
+                                    <t t-if="pager" t-call="website_utilities.custom_pager">
+                                        <t t-set="classname">pull-right</t>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- Create a list of messages that have a link to page where the message can be read -->
+                                    <table class="table table-hover status_table">
+                                        <thead>
+                                            <tr class="active">
+                                                <th>Participants</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-foreach="channels" t-as="ch">
+                                            <tr>
+                                                <td>
+                                                    <a title="Move to channel" t-attf-href="/website_channel/{{ch.id}}">
+                                                        <t t-foreach="ch.channel_partner_ids" t-as="partner">
+                                                            <t t-esc="partner.name"/>
+                                                            <t t-if="partner_index &lt; len(ch.channel_partner_ids)"> ,</t>
+                                                        </t>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </div>
+                            <t t-if="pager" t-call="website_utilities.custom_pager">
+                                <t t-set="classname">pull-right</t>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-if="not channels and not current_search">
+                        <div class="mt-5">
+                            <h2 class="text-center">You don't have any channels!</h2>
+                        </div>
+                    </t>
+                    <t t-if="not channels and current_search">
+                        <div class="mt-5 h4 text-center">
+                            <p>
+                                Your current search didn't match any authors or subjects.
+                            </p>
+                            <p>
+                                Please try again.
+                            </p>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
