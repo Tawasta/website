@@ -56,7 +56,7 @@ class ResPartner(models.Model):
         2) Find messages that have one of these models
         """
         if self.env.user.partner_id:
-            enabled_models = self.env['unread.message'].search([])
+            enabled_models = self.env['website.message.format'].search([])
             model_list = list()
             for rec in enabled_models:
                 model_list.append(rec.res_model.model)

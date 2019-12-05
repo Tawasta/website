@@ -32,11 +32,11 @@ from odoo import fields, models, _
 # 6. Unknown third party imports:
 
 
-class UnreadMessage(models.Model):
+class WebsiteMessageFormat(models.Model):
 
     # 1. Private attributes
-    _name = 'unread.message'
-    _description = 'Website unread messages'
+    _name = 'website.message.format'
+    _description = 'Website messages'
     _sql_constraints = [
         ('res_model', 'unique(res_model)',
          _('This model already has a format.'))
