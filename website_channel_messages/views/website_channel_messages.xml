@@ -19,10 +19,26 @@
             <div id="wrap">
                 <div class="oe_structure"/>
                 <div class="container">
+                    <h1 class="mt-4">
+                        My channels
+                    </h1>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="dropdown channels-dropdown pull-right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-cog"/>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <button type="button" class="dropdown-item" title="Create channel"
+                                            data-toggle="modal" data-target="#modal_create_channel">
+                                        Create channel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <t t-if="channels or current_search">
-                        <h1 class="mt-5">
-                            My channels
-                        </h1>
                         <div class="row mt-4 mb-4">
                             <div class="col-12">
                                 <!-- Search messages with author-->
@@ -55,19 +71,13 @@
                                     <table class="table table-hover status_table">
                                         <thead>
                                             <tr class="active">
-                                                <th>Name</th>
                                                 <th>Participants</th>
                                                 <th>Last message sent</th>
                                                 <th>Last message by</th>
                                             </tr>
                                         </thead>
                                         <t t-foreach="channels" t-as="ch">
-                                            <tr>
-                                                <td>
-                                                    <a title="Move to channel" t-attf-href="/website_channel/{{ch.id}}">
-                                                        <t t-esc="ch.name or '-'"/>
-                                                    </a>
-                                                </td>
+                                            <tr t-attf-id="channel_{{ch.id}}">
                                                 <td>
                                                     <t t-foreach="ch.channel_last_seen_partner_ids" t-as="partner">
                                                         <t t-esc="partner.partner_id.name"/><t t-if="partner_index + 1 &lt; len(ch.channel_last_seen_partner_ids)">,</t>
@@ -111,7 +121,43 @@
                     </t>
                 </div>
             </div>
+            <t t-call="website_channel_messages.create_channel"/>
+            <script type="text/javascript" src="/website_channel_messages/static/src/js/channels.js?v=001"></script>
         </t>
+    </template>
+
+    <template id="create_channel" name="Create channel">
+        <div id="modal_create_channel" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="Create channel modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create channel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-label="Close">&amp;times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="h5">Select recipient</span>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <select id="recipient" class="form-control select2" name="recipient" multiple="1">
+                                    <t t-foreach="partners" t-as="partner">
+                                        <option t-att-value="partner.id" t-esc="partner.name"/>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="create_channel_confirm" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </template>
 
     <template id="channel" name="Channel">
@@ -137,6 +183,7 @@
             <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/translations/fi.js"></script>
             <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/translations/sv.js"></script>
             <script type="text/javascript" src="/website_channel_messages/static/src/js/submission.js?v=001"></script>
+            <script type="text/javascript" src="/website_channel_messages/static/src/js/thread.js?v=002"></script>
         </t>
     </template>
 
@@ -183,7 +230,7 @@
 
     <template id="channel_message_thread" name="Channel messages thread">
         <h2 class="mb-3">Messages</h2>
-        <div id="channel_messages">
+        <div id="channel_messages" data-interval="30000">
             <t t-foreach="channel.message_ids" t-as="message">
                 <t t-call="website_channel_messages.single_message">
                     <t t-set="message" t-value="message"/>
