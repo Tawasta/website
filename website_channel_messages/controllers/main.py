@@ -58,12 +58,11 @@ class WebsiteChannelMessagesController(http.Controller):
             return request.render('website.404')
 
         domain = [
-            ('channel_type', '=', 'channel'),
             ('public', '=', 'private'),
-            ('channel_last_seen_partner_ids.partner_id', '=', partner_id),
+            ('channel_partner_ids', 'in', [partner_id]),
             '|',
             ('name', 'ilike', search),
-            ('channel_last_seen_partner_ids.partner_id', 'ilike', search),
+            ('channel_partner_ids', 'ilike', search),
         ]
         channel_count = channel_model.search_count(domain)
         url = request.httprequest.path.split("/page")[0]
@@ -117,14 +116,14 @@ class WebsiteChannelMessagesController(http.Controller):
         partner_id = request.env.user.partner_id.id
         channel = request.env['mail.channel'].sudo().search([
             ('id', '=', channel_id),
-            ('channel_type', '=', 'channel'),
             ('public', '=', 'private'),
-            ('channel_last_seen_partner_ids.partner_id', '=', partner_id),
+            ('channel_partner_ids', 'in', [partner_id]),
         ])
 
         if not channel:
             return request.render('website.404')
 
+        # TODO: Mark message as read
         values = {
             'channel': channel,
         }
@@ -151,15 +150,17 @@ class WebsiteChannelMessagesController(http.Controller):
         channel = request.env['mail.channel'].sudo().search([
             ('id', '=', channel_id),
             ('channel_last_seen_partner_ids.partner_id', '=', user.partner_id.id),
-        ])
-
+        ], limit=1)
         if not channel:
             return request.render('website.404')
 
+        notified_partner_ids = channel.channel_last_seen_partner_ids.mapped('partner_id').ids
+
         redirect_url = post.get('redirect_url')
-        channel.sudo(user).message_post(
+        channel.sudo(user.partner_id.id).message_post(
             body=post.get('comment'),
             message_type='comment',
             subtype='mail.mt_comment',
+            partner_ids=notified_partner_ids,
         )
         return request.redirect(redirect_url)
