@@ -318,11 +318,12 @@ class WebsiteChannelMessagesController(http.Controller):
         values = {}
         all_recipients = [current_user.partner_id.id]
         all_recipients.extend(recipient)
+        all_recipients = sorted(all_recipients)
 
         channel = MailChannel.sudo().search([
             ("channel_type", "=", "chat"),
             ("channel_partner_ids", "in", all_recipients),
-        ]).filtered(lambda r: r.channel_partner_ids.ids == all_recipients)
+        ]).filtered(lambda r: sorted(r.channel_partner_ids.ids) == all_recipients)
 
         if channel:
             values["id"] = channel.id
