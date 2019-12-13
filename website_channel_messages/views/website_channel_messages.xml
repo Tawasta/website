@@ -79,9 +79,11 @@
                                         <t t-foreach="channels" t-as="ch">
                                             <tr t-attf-id="channel_{{ch.id}}">
                                                 <td>
-                                                    <t t-foreach="ch.channel_last_seen_partner_ids" t-as="partner">
-                                                        <t t-esc="partner.partner_id.name"/><t t-if="partner_index + 1 &lt; len(ch.channel_last_seen_partner_ids)">,</t>
-                                                    </t>
+                                                    <a t-attf-href="/website_channel/{{ch.id}}">
+                                                        <t t-foreach="ch.channel_last_seen_partner_ids" t-as="partner">
+                                                            <t t-esc="partner.partner_id.name"/><t t-if="partner_index + 1 &lt; len(ch.channel_last_seen_partner_ids)">,</t>
+                                                        </t>
+                                                    </a>
                                                 </td>
                                                 <td>
                                                     <t t-if="ch.channel_message_ids">
@@ -140,10 +142,10 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
-                                <span class="h5">Select recipient</span>
+                                <span class="h5">Select recipients</span>
                             </div>
                             <div class="col-12 mt-3">
-                                <select id="recipient" class="form-control select2" name="recipient" multiple="1">
+                                <select id="recipients" class="form-control select2" name="recipients" multiple="1">
                                     <t t-foreach="partners" t-as="partner">
                                         <option t-att-value="partner.id" t-esc="partner.name"/>
                                     </t>
@@ -183,7 +185,8 @@
             <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/translations/fi.js"></script>
             <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/translations/sv.js"></script>
             <script type="text/javascript" src="/website_channel_messages/static/src/js/submission.js?v=001"></script>
-            <script type="text/javascript" src="/website_channel_messages/static/src/js/thread.js?v=002"></script>
+            <script type="text/javascript" src="/website_channel_messages/static/src/js/thread.js?v=001"></script>
+            <script type="text/javascript" src="/website_channel_messages/static/src/js/files.js?v=001"></script>
         </t>
     </template>
 
@@ -210,7 +213,7 @@
                     <div class="col-6 pl-0">
                         <button type="button" class="file-upload btn btn-success btn-block btn-lg rounded-0">
                             <span><i class="fa fa-paperclip"></i></span>
-                            <input type="file" class="upload" id="file" name="file"/>
+                            <input type="file" class="upload" id="file" name="file" t-att-data-maxsize="maxsize"/>
                         </button>
                     </div>
                 </div>

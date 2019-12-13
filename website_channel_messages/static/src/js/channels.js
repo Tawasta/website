@@ -26,13 +26,13 @@ odoo.define("website_channel_messages.channels", function (require) {
         };
 
         $(document).on("click", "#create_channel_confirm", function() {
-            var partner_id = $("#recipient").select2("val").map(Number);
+            var partner_ids = $("#recipients").select2("val").map(Number);
             var route = "/website_channel/create";
             var payload = {
-                recipient: partner_id,
+                recipients: partner_ids,
                 csrf_token: core.csrf_token,
             }
-            if (!partner_id) {
+            if (!partner_ids) {
                 toastr.error(_t("You must select recipient!"));
             } else {
                 ajax.jsonRpc(route, "call", payload).then(function(res) {

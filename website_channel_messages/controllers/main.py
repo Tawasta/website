@@ -180,12 +180,13 @@ class WebsiteChannelMessagesController(http.Controller):
             scope=7,
             url_args=post
         )
+        # Sort by last updated DESC
         channels = channel_model.sudo().search(
             domain,
-            order="id DESC",
             limit=pager_limit,
             offset=pager["offset"]
-        )
+        ).sorted(key=lambda r: r.channel_message_ids.ids, reverse=True)
+
         search_url = request.httprequest.path + ("?%s" % search)
         message_start = abs(50 - page * pager_limit) + 1
         message_end = total_count if total_count < page * pager_limit else page * pager_limit
@@ -230,8 +231,12 @@ class WebsiteChannelMessagesController(http.Controller):
             return request.render("website.404")
 
         channel.sudo(user).mark_portal_messages_read()
+        # Fix static sizes to be fetched from ir.config_parameter
         values = {
             "channel": channel,
+            "maxsize": 20,
+            "maxwidth": 1080,
+            "maxheight": 1080,
         }
         return request.render(
             "website_channel_messages.channel",
@@ -306,37 +311,32 @@ class WebsiteChannelMessagesController(http.Controller):
     @http.route([
         "/website_channel/create",
     ], type="json", auth="user")
-    def channel_create(self, recipient, csrf_token):
+    def channel_create(self, recipients, csrf_token):
         """
-        Create new channel if no chat exists for the selected recipient.
+        Create new channel if no chat exists for the selected recipients.
 
-        :param recipient: partner ID
+        :param recipients: partner IDs
         :return: JSON
         """
         current_user = request.env.user
         MailChannel = request.env["mail.channel"]
         values = {}
-        all_recipients = [current_user.partner_id.id]
-        all_recipients.extend(recipient)
-        all_recipients = sorted(all_recipients)
+        recipients.append(current_user.partner_id.id)
+        recipients.sort()
 
         channel = MailChannel.sudo().search([
             ("channel_type", "=", "chat"),
-            ("channel_partner_ids", "in", all_recipients),
-        ]).filtered(lambda r: sorted(r.channel_partner_ids.ids) == all_recipients)
+            ("channel_partner_ids", "in", recipients),
+        ]).filtered(lambda r: sorted(r.channel_partner_ids.ids) == recipients)
 
         if channel:
             values["id"] = channel.id
         else:
             values["id"] = MailChannel.sudo().create({
-                'channel_partner_ids': [(4, partner_id) for partner_id in all_recipients],
+                'channel_partner_ids': [(4, partner_id) for partner_id in recipients],
                 'public': 'private',
                 'channel_type': 'chat',
                 'email_send': False,
-                'name': ', '.join(request.env['res.partner'].sudo().browse(all_recipients).mapped('name')),
+                'name': ', '.join(request.env['res.partner'].sudo().browse(recipients).mapped('name')),
             }).id
-        print(recipient)
-        print(all_recipients)
-        print(channel)
-        print(values)
         return values

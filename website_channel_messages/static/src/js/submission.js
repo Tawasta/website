@@ -2,6 +2,7 @@ odoo.define('website_channel_messages.submission', function (require) {
     'use strict';
 
     var loadingScreen = require('website_utilities.loader').loadingScreen;
+    var checkFileSizes = require('website_channel_messages.files').checkFileSizes;
 
     require('web.dom_ready');
 
@@ -32,11 +33,25 @@ odoo.define('website_channel_messages.submission', function (require) {
 
     $('#image').on('change', function() {
         var file = $(this).prop('files')[0];
-        if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
-            alert('The File APIs are not fully supported in this browser.');
-            return false;
+        var fileTooBig = checkFileSizes($(this), $('#submission_info_div'));
+        if (fileTooBig) {
+            $(this).val('');
+            $('#submission_submit').prop('disabled', 'disabled');
+        } else {
+            if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+                alert('The File APIs are not fully supported in this browser.');
+                return false;
+            }
+            processfile(file);
         }
-        processfile(file);
+    });
+
+    $('#file').on('change', function() {
+        var fileTooBig = checkFileSizes($(this), $('#submission_info_div'));
+        if (fileTooBig) {
+            $(this).val('');
+            $('#submission_submit').prop('disabled', 'disabled');
+        }
     });
 
     function processfile(file) {
