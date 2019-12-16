@@ -233,7 +233,7 @@
     <template id="channel_message_thread" name="Channel messages thread">
         <h2 class="mb-3">Messages</h2>
         <!-- TODO: Fix data interval to be fetched from icp? -->
-        <div id="channel_messages" data-interval="3000">
+        <div id="channel_messages" data-interval="30000">
             <t t-foreach="channel.message_ids" t-as="message">
                 <t t-call="website_channel_messages.single_message">
                     <t t-set="message" t-value="message"/>
