@@ -32,6 +32,7 @@
         'website_messages_base',
     ],
     'data': [
+        'data/website_message_format.xml',
         'security/ir.model.access.csv',
         'views/website_channel_messages.xml',
     ],
