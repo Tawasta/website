@@ -56,6 +56,7 @@ def compress_image(image):
     :param image: Image data in binary
     :return: Compressed and resized image data in binary
     """
+    # TODO: Fix MAX_WIDTH and MAX_HEIGHT to be fetched from ir.config_parameter
     MAX_WIDTH = 1080
     MAX_HEIGHT = 1080
     img = Image.open(BytesIO(image))
@@ -83,6 +84,7 @@ def process_file(file):
     :param file: processed file
     :return: boolean if the file was too big
     """
+    # TODO: Fix MAX_SIZE to be fetched from ir.config_parameter
     MAX_SIZE = 20
     too_big = False
     file.seek(0, os.SEEK_END)
@@ -180,7 +182,6 @@ class WebsiteChannelMessagesController(http.Controller):
             scope=7,
             url_args=post
         )
-        # Sort by last updated DESC
         channels = channel_model.sudo().search(
             domain,
             limit=pager_limit,
@@ -231,7 +232,7 @@ class WebsiteChannelMessagesController(http.Controller):
             return request.render("website.404")
 
         channel.sudo(user).mark_portal_messages_read()
-        # Fix static sizes to be fetched from ir.config_parameter
+        # TODO: Fix static sizes to be fetched from ir.config_parameter
         values = {
             "channel": channel,
             "maxsize": 20,

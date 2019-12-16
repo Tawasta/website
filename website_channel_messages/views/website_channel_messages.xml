@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
-    <!-- Add link to navigation bar -->
     <template id="header" inherit_id="website_messages_base.header">
         <xpath expr="//li[@id='website_messages_dropdown']/ul" position="inside">
             <li>
@@ -41,7 +39,6 @@
                     <t t-if="channels or current_search">
                         <div class="row mt-4 mb-4">
                             <div class="col-12">
-                                <!-- Search messages with author-->
                                 <form t-att-action="search_url" method="get" class="form-inline">
                                     <t t-call="website.website_search_box"/>
                                 </form>
@@ -67,7 +64,6 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- Create a list of messages that have a link to page where the message can be read -->
                                     <table class="table table-hover status_table">
                                         <thead>
                                             <tr class="active">
@@ -81,7 +77,9 @@
                                                 <td>
                                                     <a t-attf-href="/website_channel/{{ch.id}}">
                                                         <t t-foreach="ch.channel_last_seen_partner_ids" t-as="partner">
-                                                            <t t-esc="partner.partner_id.name"/><t t-if="partner_index + 1 &lt; len(ch.channel_last_seen_partner_ids)">,</t>
+                                                            <t t-if="partner.partner_id.id != request.env.user.partner_id.id">
+                                                                <t t-esc="partner.partner_id.name"/><t t-if="partner_index + 1 &lt; len(ch.channel_last_seen_partner_ids)">,</t>
+                                                            </t>
                                                         </t>
                                                     </a>
                                                 </td>
@@ -172,7 +170,8 @@
                         <div class="col-6">
                             <h3 class="mt-5">Channel participants</h3>
                             <t t-foreach="channel.channel_last_seen_partner_ids" t-as="partner">
-                                <span class="d-block" t-field="partner.partner_id.name"/>
+                                <span t-if="partner.partner_id.id != request.env.user.partner_id.id"
+                                    class="d-block" t-field="partner.partner_id.name"/>
                             </t>
                         </div>
                     </div>
