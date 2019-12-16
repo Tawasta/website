@@ -8,13 +8,12 @@ odoo.define("website_channel_messages.thread", function (require) {
 
     require("web.dom_ready");
 
-    // Update message thread
     function updateMessages () {
-        var record = $("#maincontent").attr("data-record-id");
+        var record = parseInt($("#maincontent").attr("data-record-id", 10)) || 0;
         var route = "/website_channel/update_messages";
         var timestamp = $("#maincontent").attr("data-timestamp");
         var payload = {
-            channel_id: parseInt(record) || 0,
+            channel_id: record,
             timestamp: timestamp,
             csrf_token: core.csrf_token,
         };
@@ -36,12 +35,11 @@ odoo.define("website_channel_messages.thread", function (require) {
     var record = $("#maincontent").attr("data-record-id");
 
     if (record !== undefined) {
-        $(window).scroll(function() {
-            $(".msg-img").each(function(i) {
-                var bottom_of_object = $(this).offset().top + $(this).outerHeight();
-                var bottom_of_window = $(window).scrollTop() + $(window).height();
-                if (bottom_of_window > bottom_of_object &&
-                        $(this).attr("src") == undefined) {
+        $(window).scroll(function () {
+            $(".msg-img").each(function () {
+                var bot_obj = $(this).offset().top + $(this).outerHeight();
+                var bot_window = $(window).scrollTop() + $(window).height();
+                if (bot_window > bot_obj && $(this).attr("src") === undefined) {
                     $(this).attr("src", $(this).attr("data-src"));
                 }
             });

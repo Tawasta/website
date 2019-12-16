@@ -19,7 +19,7 @@ odoo.define("website_channel_messages.files", function (require) {
 
         $(info_div).addClass("d-none");
 
-        elements += "<p>" + fileCount + "</p><p id="file_sizes">";
+        elements += "<p>" + fileCount + "</p><p id="'file_sizes'">";
 
         for (var i = 0; i < files.length; ++i) {
             var file = files[i];

@@ -19,19 +19,19 @@ odoo.define("website_channel_messages.submission", function (require) {
             "link", "bulletedList", "numberedList",
             "blockQuote", "undo", "redo"
         ],
-    }).then(editor => {
-        editor.model.document.on("change:data", function(evt){
+    }).then(function (editor) {
+        editor.model.document.on("change:data", function (evt){
             var text = $.trim(editor.getData());
             $("#submission_submit").prop("disabled", !text);
         });
     });
 
-    $("#submission_submit").on("click", function() {
+    $("#submission_submit").on("click", function () {
         loadingScreen();
         $("#submission_form").submit();
     });
 
-    $("#image").on("change", function() {
+    $("#image").on("change", function () {
         var file = $(this).prop("files")[0];
         var fileTooBig = checkFileSizes($(this), $("#submission_info_div"));
         if (fileTooBig) {
@@ -46,7 +46,7 @@ odoo.define("website_channel_messages.submission", function (require) {
         }
     });
 
-    $("#file").on("change", function() {
+    $("#file").on("change", function () {
         var fileTooBig = checkFileSizes($(this), $("#submission_info_div"));
         if (fileTooBig) {
             $(this).val("");
@@ -69,7 +69,7 @@ odoo.define("website_channel_messages.submission", function (require) {
             var blobURL = window.URL.createObjectURL(blob);
             var image = new Image();
             image.src = blobURL;
-            image.onload = function() {
+            image.onload = function () {
                 var resized = resizeMe(image);
                 var newinput = document.createElement("input");
                 newinput.type = "hidden";

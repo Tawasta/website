@@ -25,7 +25,7 @@ odoo.define("website_channel_messages.channels", function (require) {
             "hideMethod": "fadeOut",
         };
 
-        $(document).on("click", "#create_channel_confirm", function() {
+        $(document).on("click", "#create_channel_confirm", function () {
             var partner_ids = $("#recipients").select2("val").map(Number);
             var route = "/website_channel/create";
             var payload = {
@@ -35,7 +35,7 @@ odoo.define("website_channel_messages.channels", function (require) {
             if (!partner_ids) {
                 toastr.error(_t("You must select recipient!"));
             } else {
-                ajax.jsonRpc(route, "call", payload).then(function(res) {
+                ajax.jsonRpc(route, "call", payload).then(function (res) {
                     // Check if the channel already existed
                     var channel_id = res.id;
                     if ($("#channel_" + channel_id).length === 0) {
