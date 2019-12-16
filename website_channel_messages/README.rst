@@ -6,7 +6,12 @@
 Website Channel Messages
 ========================
 
-Adds channels and messaging -feature to website.
+Adds channels messaging -feature to website.
+Uses CKEditor as RTE to post messages to channels.
+
+TODO:
+* Finish the generic message processing module for portal/website to get
+rid of boilerplate code.
 
 
 Installation
