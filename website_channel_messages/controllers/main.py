@@ -92,52 +92,55 @@ def process_file(file):
     file.seek(0)
     if file_size > MAX_SIZE * 1024 * 1024:
         too_big = True
-        _logger.warning("Attachment filesize too big: %d MB" % (file_size / 1024 / 1024))
+        _logger.warning("Attachment filesize too big: %d MB" %
+                        (file_size / 1024 / 1024))
     return too_big
 
 
 def process_message(user, record, data):
-        """
-        Process message posted to record:
-        - Compress and resize image
-        - Check that the attachment isn"t too big
-        - Notify related partners
-        :param user: current user
-        :param record: related record
-        :param data: submitted form data
-        """
-        comment = data.get("comment")
-        image = data.get("resized") or data.get("image")
-        file = data.get("file")
-        attachment_list = list()
-        error = False
-        if comment:
-            if image:
-                if data.get("resized"):
-                    img_string = data.get("resized").split(",")[1]
-                    image_data = base64.b64decode(img_string)
-                else:
-                    image_data = image.read()
-                resized = compress_image(image_data)
-                mimetype = data.get("image").mimetype
-                filename = data.get("image").filename if "png" not in mimetype else "image.jpg"
-                attachment_list.append((filename, resized))
-            if file:
-                too_big = process_file(file)
-                if too_big:
-                    error = True
-                file_data = file.read()
-                attachment_list.append((file.filename, file_data))
-            if not error:
-                notified_partner_ids = record.channel_last_seen_partner_ids.mapped("partner_id").ids
-                record.sudo().message_post(
-                    author_id=user.partner_id.id,
-                    body=comment,
-                    message_type="comment",
-                    subtype="mail.mt_comment",
-                    attachments=attachment_list,
-                    partner_ids=notified_partner_ids,
-                )
+    """
+    Process message posted to record:
+    - Compress and resize image
+    - Check that the attachment isn"t too big
+    - Notify related partners
+    :param user: current user
+    :param record: related record
+    :param data: submitted form data
+    """
+    comment = data.get("comment")
+    image = data.get("resized") or data.get("image")
+    file = data.get("file")
+    attachment_list = list()
+    error = False
+    if comment:
+        if image:
+            if data.get("resized"):
+                img_string = data.get("resized").split(",")[1]
+                image_data = base64.b64decode(img_string)
+            else:
+                image_data = image.read()
+            resized = compress_image(image_data)
+            mimetype = data.get("image").mimetype
+            filename = data.get(
+                "image").filename if "png" not in mimetype else "image.jpg"
+            attachment_list.append((filename, resized))
+        if file:
+            too_big = process_file(file)
+            if too_big:
+                error = True
+            file_data = file.read()
+            attachment_list.append((file.filename, file_data))
+        if not error:
+            notified_partner_ids = record.channel_last_seen_partner_ids.mapped(
+                "partner_id").ids
+            record.sudo().message_post(
+                author_id=user.partner_id.id,
+                body=comment,
+                message_type="comment",
+                subtype="mail.mt_comment",
+                attachments=attachment_list,
+                partner_ids=notified_partner_ids,
+            )
 
 
 class WebsiteChannelMessagesController(http.Controller):
@@ -190,7 +193,8 @@ class WebsiteChannelMessagesController(http.Controller):
 
         search_url = request.httprequest.path + ("?%s" % search)
         message_start = abs(50 - page * pager_limit) + 1
-        message_end = total_count if total_count < page * pager_limit else page * pager_limit
+        message_end = total_count if total_count < page * pager_limit \
+            else page * pager_limit
         visible = "{} - {} / {}".format(message_start, message_end, total_count)
 
         partners = request.env["res.users"].sudo().search([]).mapped('partner_id')
@@ -338,6 +342,7 @@ class WebsiteChannelMessagesController(http.Controller):
                 'public': 'private',
                 'channel_type': 'chat',
                 'email_send': False,
-                'name': ', '.join(request.env['res.partner'].sudo().browse(recipients).mapped('name')),
+                'name': ', '.join(request.env['res.partner'].sudo()
+                                  .browse(recipients).mapped('name')),
             }).id
         return values

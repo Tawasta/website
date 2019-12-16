@@ -1,10 +1,10 @@
-odoo.define('website_channel_messages.submission', function (require) {
-    'use strict';
+odoo.define("website_channel_messages.submission", function (require) {
+    "use strict";
 
-    var loadingScreen = require('website_utilities.loader').loadingScreen;
-    var checkFileSizes = require('website_channel_messages.files').checkFileSizes;
+    var loadingScreen = require("website_utilities.loader").loadingScreen;
+    var checkFileSizes = require("website_channel_messages.files").checkFileSizes;
 
-    require('web.dom_ready');
+    require("web.dom_ready");
 
     var lang = "fi";
     if (window.location.pathname.indexOf("en_US") >= 0) {
@@ -12,45 +12,45 @@ odoo.define('website_channel_messages.submission', function (require) {
     } else if (window.location.pathname.indexOf("sv_SE") >= 0) {
         lang = "sv"
     }
-    var comment = ClassicEditor.create(document.querySelector('#comment'), {
+    var comment = ClassicEditor.create(document.querySelector("#comment"), {
         language: lang,
         toolbar: [
-            'heading', '|', 'bold', 'italic',
-            'link', 'bulletedList', 'numberedList',
-            'blockQuote', 'undo', 'redo'
+            "heading", "|", "bold", "italic",
+            "link", "bulletedList", "numberedList",
+            "blockQuote", "undo", "redo"
         ],
     }).then(editor => {
-        editor.model.document.on('change:data', function(evt){
+        editor.model.document.on("change:data", function(evt){
             var text = $.trim(editor.getData());
-            $('#submission_submit').prop('disabled', !text);
+            $("#submission_submit").prop("disabled", !text);
         });
     });
 
-    $('#submission_submit').on('click', function() {
+    $("#submission_submit").on("click", function() {
         loadingScreen();
-        $('#submission_form').submit();
+        $("#submission_form").submit();
     });
 
-    $('#image').on('change', function() {
-        var file = $(this).prop('files')[0];
-        var fileTooBig = checkFileSizes($(this), $('#submission_info_div'));
+    $("#image").on("change", function() {
+        var file = $(this).prop("files")[0];
+        var fileTooBig = checkFileSizes($(this), $("#submission_info_div"));
         if (fileTooBig) {
-            $(this).val('');
-            $('#submission_submit').prop('disabled', 'disabled');
+            $(this).val("");
+            $("#submission_submit").prop("disabled", "disabled");
         } else {
             if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
-                alert('The File APIs are not fully supported in this browser.');
+                alert("The File APIs are not fully supported in this browser.");
                 return false;
             }
             processfile(file);
         }
     });
 
-    $('#file').on('change', function() {
-        var fileTooBig = checkFileSizes($(this), $('#submission_info_div'));
+    $("#file").on("change", function() {
+        var fileTooBig = checkFileSizes($(this), $("#submission_info_div"));
         if (fileTooBig) {
-            $(this).val('');
-            $('#submission_submit').prop('disabled', 'disabled');
+            $(this).val("");
+            $("#submission_submit").prop("disabled", "disabled");
         }
     });
 
@@ -72,21 +72,21 @@ odoo.define('website_channel_messages.submission', function (require) {
             image.onload = function() {
                 var resized = resizeMe(image);
                 var newinput = document.createElement("input");
-                newinput.type = 'hidden';
-                newinput.name = 'resized';
+                newinput.type = "hidden";
+                newinput.name = "resized";
                 newinput.value = resized;
-                $('#submission_form').append(newinput);
+                $("#submission_form").append(newinput);
                 $.unblockUI();
             }
         };
     }
 
     function resizeMe(img) {
-        var canvas = document.createElement('canvas');
+        var canvas = document.createElement("canvas");
         var width = img.width;
         var height = img.height;
-        var MAX_WIDTH = $('#image').attr('data-maxwidth');
-        var MAX_HEIGHT = $('#image').attr('data-maxheight');
+        var MAX_WIDTH = $("#image").attr("data-maxwidth");
+        var MAX_HEIGHT = $("#image").attr("data-maxheight");
 
         // calculate the width and height, constraining the proportions
         if (width > height) {
