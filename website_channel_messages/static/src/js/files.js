@@ -8,7 +8,6 @@ odoo.define("website_channel_messages.files", function (require) {
     var checkFileSizes = function (el, info_div) {
         var files = $(el).prop("files");
         var size = "";
-        var msg = "";
         var maxSize = $(el).data("maxsize");
         var elements = "";
         var fileCount = files.length.toString() + _t(" file(s) selected:");
@@ -25,14 +24,13 @@ odoo.define("website_channel_messages.files", function (require) {
             var file = files[i];
             if (file.size > 1024 * 1024) {
                 size = (Math.round(file.size * 10 / (1000 * 1000)) / 10).toString() + "MB";
-            }
-            else {
+            } else {
                 size = (Math.round(file.size * 10 / 1000) / 10).toString() + "KB";
             }
             // If file is larger than max_size, clear the element and give notifications
             if (file.size > (maxSize * 1000 * 1000)) {
                 fileTooBig = true;
-                elements += "<strong>" + fileTooBigLabel + "</strong><br/>"
+                elements += "<strong>" + fileTooBigLabel + "</strong><br/>";
                 elements += fileNameLabel + file.name + ", " + fileSizeLabel + size + "<br/><br/>";
             } else {
                 elements += fileNameLabel + file.name + ", " + fileSizeLabel + size + "<br/>";
@@ -46,9 +44,9 @@ odoo.define("website_channel_messages.files", function (require) {
         }
         $(info_div).html(elements);
         return fileTooBig;
-    }
+    };
 
     return {
-        checkFileSizes: checkFileSizes
-    } 
+        checkFileSizes: checkFileSizes,
+    };
 });
