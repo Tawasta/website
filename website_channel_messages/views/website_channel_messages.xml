@@ -78,7 +78,7 @@
                                                     <a t-attf-href="/website_channel/{{ch.id}}">
                                                         <t t-foreach="ch.channel_last_seen_partner_ids" t-as="partner">
                                                             <t t-if="partner.partner_id.id != request.env.user.partner_id.id">
-                                                                <t t-esc="partner.partner_id.name"/><t t-if="partner_index + 1 &lt; len(ch.channel_last_seen_partner_ids)">,</t>
+                                                                <t t-esc="partner.partner_id.name"/><t t-if="partner_index + 1 &lt; len(ch.channel_last_seen_partner_ids) and len(ch.channel_last_seen_partner_ids) &gt; 2">,</t>
                                                             </t>
                                                         </t>
                                                     </a>

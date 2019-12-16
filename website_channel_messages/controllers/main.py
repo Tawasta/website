@@ -53,10 +53,11 @@ def compress_image(image):
     - Resize image with new dimensions
     - Compress using image_save_for_web -utility
 
+    TODO: Fix MAX_WIDTH and MAX_HEIGHT to be fetched from ir.config_parameter
+
     :param image: Image data in binary
     :return: Compressed and resized image data in binary
     """
-    # TODO: Fix MAX_WIDTH and MAX_HEIGHT to be fetched from ir.config_parameter
     MAX_WIDTH = 1080
     MAX_HEIGHT = 1080
     img = Image.open(BytesIO(image))
@@ -80,11 +81,11 @@ def process_file(file):
     """
     Check if the file is too large.
     Max size can be set on system parameters.
+    TODO: Fix MAX_SIZE to be fetched from ir.config_parameter
 
     :param file: processed file
     :return: boolean if the file was too big
     """
-    # TODO: Fix MAX_SIZE to be fetched from ir.config_parameter
     MAX_SIZE = 20
     too_big = False
     file.seek(0, os.SEEK_END)
@@ -197,7 +198,9 @@ class WebsiteChannelMessagesController(http.Controller):
             else page * pager_limit
         visible = "{} - {} / {}".format(message_start, message_end, total_count)
 
-        partners = request.env["res.users"].sudo().search([]).mapped('partner_id')
+        partners = request.env["res.users"].sudo().search([
+            ('partner_id', '!=', partner_id)
+        ]).mapped('partner_id')
         values = {
             "channels": channels,
             "pager": pager,
@@ -267,8 +270,6 @@ class WebsiteChannelMessagesController(http.Controller):
             ("id", "=", channel_id),
             ("channel_partner_ids", "in", [user.partner_id.id]),
         ], limit=1)
-        print(channel)
-        print(channel.channel_partner_ids)
         if not channel:
             return request.render("website.404")
 

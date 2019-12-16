@@ -21,7 +21,7 @@ odoo.define("website_channel_messages.thread", function (require) {
         if (document.hasFocus()) {
             ajax.jsonRpc(route, "call", payload).then(function (res) {
                 if (res !== "") {
-                    var new_date = (new Date().getTime() / 1000);
+                    var new_date = new Date().getTime() / 1000;
                     $("#maincontent").attr("data-timestamp", new_date);
                     var cleaned = res.replace("data-src", "src");
                     $("#channel_messages").prepend(cleaned);

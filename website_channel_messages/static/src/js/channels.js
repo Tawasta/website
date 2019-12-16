@@ -31,8 +31,8 @@ odoo.define("website_channel_messages.channels", function (require) {
             var payload = {
                 recipients: partner_ids,
                 csrf_token: core.csrf_token,
-            }
-            if (!partner_ids) {
+            };
+            if (partner_ids.length === 0) {
                 toastr.error(_t("You must select recipient!"));
             } else {
                 ajax.jsonRpc(route, "call", payload).then(function (res) {
@@ -49,8 +49,6 @@ odoo.define("website_channel_messages.channels", function (require) {
                     }
                 });
             }
-            
-
         });
     });
 });

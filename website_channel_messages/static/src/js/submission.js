@@ -10,21 +10,70 @@ odoo.define("website_channel_messages.submission", function (require) {
     if (window.location.pathname.indexOf("en_US") >= 0) {
         lang = "en";
     } else if (window.location.pathname.indexOf("sv_SE") >= 0) {
-        lang = "sv"
+        lang = "sv";
     }
-    var comment = ClassicEditor.create(document.querySelector("#comment"), {
+    ClassicEditor.create(document.querySelector("#comment"), {
         language: lang,
         toolbar: [
             "heading", "|", "bold", "italic",
             "link", "bulletedList", "numberedList",
-            "blockQuote", "undo", "redo"
+            "blockQuote", "undo", "redo",
         ],
     }).then(function (editor) {
-        editor.model.document.on("change:data", function (evt){
+        editor.model.document.on("change:data", function () {
             var text = $.trim(editor.getData());
             $("#submission_submit").prop("disabled", !text);
         });
     });
+
+    function resizeMe(img) {
+        var canvas = document.createElement("canvas");
+        var width = img.width;
+        var height = img.height;
+        var MAX_WIDTH = $("#image").attr("data-maxwidth");
+        var MAX_HEIGHT = $("#image").attr("data-maxheight");
+
+        // Calculate the width and height, constraining the proportions
+        if (width >= height && width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+        } else if (width < height && height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+        }
+        canvas.width = width;
+        canvas.height = height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+        return canvas.toDataURL("image/jpeg");
+    }
+
+    function processfile(file) {
+        if (!(/image/i).test(file.type)) {
+            // Not an image, prevent this
+            return false;
+        }
+        loadingScreen();
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]);
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob);
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function () {
+                var resized = resizeMe(image);
+                var newinput = document.createElement("input");
+                newinput.type = "hidden";
+                newinput.name = "resized";
+                newinput.value = resized;
+                $("#submission_form").append(newinput);
+                $.unblockUI();
+            }
+        };
+    }
 
     $("#submission_submit").on("click", function () {
         loadingScreen();
@@ -53,57 +102,4 @@ odoo.define("website_channel_messages.submission", function (require) {
             $("#submission_submit").prop("disabled", "disabled");
         }
     });
-
-    function processfile(file) {
-        if(!(/image/i).test(file.type)){
-            // Not an image, prevent this
-            return false;
-        }
-        loadingScreen();
-        var reader = new FileReader();
-        reader.readAsArrayBuffer(file);
-        
-        reader.onload = function (event) {
-            var blob = new Blob([event.target.result]);
-            window.URL = window.URL || window.webkitURL;
-            var blobURL = window.URL.createObjectURL(blob);
-            var image = new Image();
-            image.src = blobURL;
-            image.onload = function () {
-                var resized = resizeMe(image);
-                var newinput = document.createElement("input");
-                newinput.type = "hidden";
-                newinput.name = "resized";
-                newinput.value = resized;
-                $("#submission_form").append(newinput);
-                $.unblockUI();
-            }
-        };
-    }
-
-    function resizeMe(img) {
-        var canvas = document.createElement("canvas");
-        var width = img.width;
-        var height = img.height;
-        var MAX_WIDTH = $("#image").attr("data-maxwidth");
-        var MAX_HEIGHT = $("#image").attr("data-maxheight");
-
-        // calculate the width and height, constraining the proportions
-        if (width > height) {
-            if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-            }
-        } else {
-            if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-            }
-        }
-        canvas.width = width;
-        canvas.height = height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
-        return canvas.toDataURL("image/jpeg");
-    }
 });
