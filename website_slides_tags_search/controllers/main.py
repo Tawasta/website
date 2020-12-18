@@ -1,9 +1,6 @@
-import base64
-import logging
 import werkzeug
 
 from odoo import http, _
-from odoo.exceptions import AccessError, UserError
 from odoo.http import request
 from odoo.addons.website_slides.controllers.main import WebsiteSlides
 
