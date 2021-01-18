@@ -11,6 +11,7 @@
                     t-as="item">
                     <a
                         t-if="website['social_' + item]"
+                        t-att-target="'_blank'"
                         t-att-href="website['social_' + item]">
                         <i t-attf-class="fa fa-2x fa-{{ item }}"></i>
                     </a>
