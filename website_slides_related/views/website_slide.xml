@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="related_remove_views_and_modify_date" inherit_id="website_slides.related_slides">
+        <xpath expr="//small[@class='text-muted']" position="replace">
+            <small class="text-muted">
+                <timeago class="timeago" t-att-datetime="slide.date_published"></timeago>
+            </small>
+        </xpath>
+    </template>
+</odoo>
