@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="slides_remove_views" inherit_id="website_slides.slides_grid_view">
+        <xpath expr="//div[@class='text-muted clearfix']/small[@class='float-left']" position="replace"></xpath>
+    </template>
+</odoo>
