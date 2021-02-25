@@ -1,3 +1,4 @@
+from odoo import api
 from odoo import models
 from odoo import fields
 
@@ -9,7 +10,15 @@ class IrTranslation(models.Model):
         string="Related product",
         comodel_name="product.template",
         compute="_compute_product_template_id",
+        search="_search_product_template_id",
     )
+
+    @api.multi
+    def _search_product_template_id(self, operator, value):
+        recs = self.search([]).filtered(
+            lambda x: x.product_template_id)
+        if recs:
+            return [('id', 'in', [x.id for x in recs])]
 
     def _compute_product_template_id(self):
         product_template = self.env["product.template"]
@@ -24,3 +33,5 @@ class IrTranslation(models.Model):
             except ValueError:
                 # Skip translations with incomplete data
                 continue
+
+
